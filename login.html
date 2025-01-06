@@ -2,9 +2,137 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCP Styled Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="loginStyles.css">
 </head>
-<body>
+<body class="bg-dark text-light">
 
+<!-- Login Page -->
+<div id="login-page" class="container mt-5 hidden" style="position: relative;">
+    <!-- Moving Background Elements -->
+    <div class="moving-bg-element"></div>
+    <div class="moving-bg-element"></div>
+    <div class="moving-bg-element"></div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card bg-black border-light shadow-lg">
+                <div class="card-body">
+                    <h2 class="text-center mb-4 text-success">Login</h2>
+                    <form id="login-form" onsubmit="return handleLogin(event)">
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control bg-dark text-light border-light" id="password" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 mt-3">Login</button>
+                    </form>
+                    <hr class="text-muted">
+                    <div class="text-center">
+                        <p class="text-muted">Need help? DM <strong>@sticksdev</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extra Content Section -->
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="info-box bg-dark text-light p-3 border-light">
+                <h5 class="text-success">About Cookies</h5>
+                <p>We use cookies to ensure your secure and personalized login experience. No personal data is shared.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-box bg-dark text-light p-3 border-light">
+                <h5 class="text-warning">System Notices</h5>
+                <p>Ensure your credentials are not shared with unauthorized personnel. Violations will result in punishment.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-box bg-dark text-light p-3 border-light">
+                <h5 class="text-info">Support</h5>
+                <p>Contact <strong>@sticksdev.</strong> on discord for any assistance.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Intro Modal -->
+<div id="intro-modal" class="intro-modal d-flex flex-column justify-content-center align-items-center bg-black text-light position-fixed top-0 start-0 w-100 h-100">
+    <div class="text-center">
+        <h1 id="intro-heading" class="display-4 fw-bold">Welcome to Department Home Secure Login</h1>
+        <p id="intro-text" class="lead mt-3">Loading...</p>
+    </div>
+    <button id="skip-btn" class="btn btn-outline-light mt-4 position-absolute" onclick="skipIntro()">Skip Intro</button>
+</div>
+
+<script>
+    const introSteps = [
+        "This system uses cookies to save your login information securely.",
+        "We value your privacy and security above all.",
+        "For any assistance, DM @sticksdev."
+    ];
+    let currentStep = 0;
+
+    // Start Intro Animation
+    function startIntro() {
+        const introText = document.getElementById("intro-text");
+        const skipBtn = document.getElementById("skip-btn");
+
+        // Iterate through steps with delay
+        const interval = setInterval(() => {
+            if (currentStep < introSteps.length) {
+                introText.textContent = introSteps[currentStep];
+                currentStep++;
+            } else {
+                clearInterval(interval); // Stop animation
+                skipBtn.textContent = "Continue";
+            }
+        }, 3000); // Change text every 3 seconds
+    }
+
+    // Skip the intro and show the login page
+    function skipIntro() {
+        const introModal = document.getElementById('intro-modal');
+        const loginPage = document.getElementById('login-page');
+
+        // Add the fade-out animation class
+        introModal.classList.add("fade-out");
+
+        // Wait for the animation to finish before hiding the intro modal
+        introModal.addEventListener("animationend", () => {
+            introModal.style.display = 'none'; // Fully hide the modal after fading out
+            loginPage.classList.remove("hidden"); // Show the login page
+        });
+    }
+
+    // Handle login form submission
+    function handleLogin(event) {
+        event.preventDefault();
+
+        const password = document.getElementById('password').value;
+
+        fetch('http://207.174.41.130:7160/login', {
+            method: 'POST',
+            credentials: 'include',
+            body: password,
+        });
+
+        alert('Press OK');
+        document.cookie = `sessionId=${password}; path=/; SameSite=None; Secure`;
+        window.location.href = 'index.html';
+    }
+
+    // Start intro on page load
+    window.onload = startIntro;
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
