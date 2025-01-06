@@ -57,7 +57,7 @@
     function returnToLogin() {
         // Redirect to login page
         alert('Returning to login page...');
-        window.location.href = 'login.html'; // Replace with your login URL
+        window.location.href = 'login.html';
     }
 
     function formatMoney(amount) {
@@ -67,7 +67,7 @@
     async function updateMoneyDisplay() {
         const moneyElement = document.getElementById('money-display');
         try {
-            const sessionId = 'ac7f427c-22a1-4628-adee-b6bef96271eb'; // Replace with your sessionId
+            const sessionId = 'ac7f427c-22a1-4628-adee-b6bef96271eb';
             const response = await fetch('http://207.174.41.130:7160/home/balance', {
                 method: 'GET', // or 'POST', 'PUT', etc.
                 headers: {
