@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCP Styled Website</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-dark text-light">
+<nav class="navbar navbar-dark bg-black shadow-sm position-relative">
+    <div class="container-fluid d-flex align-items-center">
+        <!-- Left: Return to Login -->
+        <button class="btn btn-outline-light me-auto" onclick="returnToLogin()">
+            <i class="fas fa-arrow-left"></i> Return to Login </button>
+        <!-- Center: Department Home -->
+        <div class="position-absolute start-50 translate-middle-x">
+            <span class="navbar-text fs-4 fw-bold">Department Home</span>
+        </div>
+        <!-- Right: Money Display -->
+        <span id="money-display" class="badge bg-success ms-auto fs-5 fw-bold">Error</span>
+    </div>
+</nav>
+<div class="container mt-5">
+    <!-- Modern Tabs -->
+    <ul class="nav nav-tabs custom-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true"> Tab 1 </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false"> Tab 2 </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false"> Tab 3 </button>
+        </li>
+    </ul>
+    <!-- Tabs Content -->
+    <div class="tab-content custom-tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+            <h2 class="mt-3">Tab 1 Content</h2>
+            <p>This is the content for Tab 1. Add more details here!</p>
+        </div>
+        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+            <h2 class="mt-3">Tab 2 Content</h2>
+            <p>This is the content for Tab 2. You can customize this section!</p>
+        </div>
+        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+            <h2 class="mt-3">Tab 3 Content</h2>
+            <p>This is the content for Tab 3. More information can go here!</p>
+        </div>
+    </div>
+</div>
+<script>
+    function returnToLogin() {
+        // Redirect to login page
+        alert('Returning to login page...');
+        window.location.href = 'login.html'; // Replace with your login URL
+    }
+
+    function formatMoney(amount) {
+        return '$' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    async function updateMoneyDisplay() {
+        const moneyElement = document.getElementById('money-display');
+        try {
+            const sessionId = 'ac7f427c-22a1-4628-adee-b6bef96271eb'; // Replace with your sessionId
+            const response = await fetch('http://207.174.41.130:7160/home/balance', {
+                method: 'GET', // or 'POST', 'PUT', etc.
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `Bearer ${sessionId}`, // Custom header to send sessionId
+                },
+            });
+
+            if (!response.ok) {
+                alert(`Error! Status: ${response.status}`);
+                console.error(`HTTP error! Status: ${response.status}`);
+                moneyElement.textContent = `Error fetching data. See console for details.`;
+                return;
+            }
+
+            const data = await response.json();
+
+            moneyElement.textContent = formatMoney(data.Balance);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            moneyElement.textContent = `Error fetching data. See console for details.`;
+        }
+    }
+    // Format money on page load
+    updateMoneyDisplay();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
