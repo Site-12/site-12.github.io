@@ -55,8 +55,12 @@
 </div>
 <script>
     function start() {
-        fetch('http://207.174.41.130:7160')
-        updateMoneyDisplay();
+        fetch('https://207.174.41.130:7160/api/session', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include'
+        }).then(response => console.log(response));
+        // updateMoneyDisplay();
     }
 
     function formatMoney(amount) {
