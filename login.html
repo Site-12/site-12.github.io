@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login Page</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        />
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+            body {
+                font-family: "Roboto", sans-serif;
+                background-color: #1a1a1a;
+                color: #fff;
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-image:
+                    radial-gradient(
+                        circle at 20% 50%,
+                        rgba(120, 119, 198, 0.1) 0%,
+                        transparent 50%
+                    ),
+                    radial-gradient(
+                        circle at 80% 20%,
+                        rgba(255, 119, 48, 0.1) 0%,
+                        transparent 50%
+                    ),
+                    radial-gradient(
+                        circle at 40% 80%,
+                        rgba(120, 119, 198, 0.1) 0%,
+                        transparent 50%
+                    );
+                background-attachment: fixed;
+                position: relative;
+                overflow: hidden;
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    45deg,
+                    transparent 30%,
+                    rgba(255, 255, 255, 0.02) 30%,
+                    rgba(255, 255, 255, 0.02) 70%,
+                    transparent 70%
+                );
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .login-container {
+                background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
+                border: 2px solid #333;
+                border-radius: 12px;
+                box-shadow:
+                    0 20px 40px rgba(0, 0, 0, 0.5),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                padding: 40px;
+                width: 100%;
+                max-width: 420px;
+                position: relative;
+                z-index: 2;
+                backdrop-filter: blur(10px);
+            }
+
+            .login-header {
+                text-align: center;
+                margin-bottom: 30px;
+                position: relative;
+            }
+
+            .scp-logo {
+                font-size: 3rem;
+                color: #666;
+                margin-bottom: 10px;
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            }
+
+            .login-title {
+                font-size: 1.8rem;
+                font-weight: 700;
+                color: #fff;
+                margin: 0 0 5px 0;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            .login-subtitle {
+                font-size: 0.9rem;
+                color: #999;
+                font-weight: 300;
+                margin: 0;
+            }
+
+            .classification-badge {
+                background: linear-gradient(45deg, #ff4444, #cc0000);
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.7rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin: 15px 0;
+                display: inline-block;
+                box-shadow: 0 2px 10px rgba(255, 68, 68, 0.3);
+            }
+
+            .form-group {
+                margin-bottom: 25px;
+                position: relative;
+            }
+
+            .form-label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+                color: #ccc;
+                text-transform: uppercase;
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+
+            .form-input {
+                width: 100%;
+                padding: 15px 20px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 2px solid #333;
+                border-radius: 8px;
+                color: #fff;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+                backdrop-filter: blur(5px);
+            }
+
+            .form-input:focus {
+                outline: none;
+                border-color: #4caf50;
+                background: rgba(255, 255, 255, 0.08);
+                box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            }
+
+            .form-input::placeholder {
+                color: #666;
+            }
+
+            .login-btn {
+                width: 100%;
+                padding: 15px;
+                background: linear-gradient(135deg, #4caf50, #2e7d32);
+                border: none;
+                border-radius: 8px;
+                color: white;
+                font-size: 1rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .login-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            }
+
+            .login-btn:active {
+                transform: translateY(0);
+            }
+
+            .login-btn::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent
+                );
+                transition: left 0.5s;
+            }
+
+            .login-btn:hover::before {
+                left: 100%;
+            }
+
+            .security-notice {
+                margin-top: 20px;
+                padding: 15px;
+                background: rgba(255, 193, 7, 0.1);
+                border-left: 4px solid #ffc107;
+                border-radius: 0 8px 8px 0;
+                font-size: 0.8rem;
+                color: #ffc107;
+            }
+
+            .cookie-notice {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #2a2a2a, #1e1e1e);
+                border-top: 2px solid #333;
+                padding: 20px;
+                z-index: 1000;
+                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(10px);
+            }
+
+            .cookie-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .cookie-text {
+                flex: 1;
+                min-width: 300px;
+                font-size: 0.9rem;
+                color: #ccc;
+                line-height: 1.5;
+            }
+
+            .cookie-text strong {
+                color: #fff;
+            }
+
+            .cookie-btn {
+                background: linear-gradient(135deg, #4caf50, #2e7d32);
+                border: none;
+                border-radius: 6px;
+                color: white;
+                padding: 12px 24px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+            }
+
+            .cookie-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+            }
+
+            .input-icon {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #666;
+                pointer-events: none;
+            }
+
+            .form-group {
+                position: relative;
+            }
+
+            .form-group .input-icon {
+                top: 65%;
+            }
+
+            @media (max-width: 480px) {
+                .login-container {
+                    margin: 20px;
+                    padding: 30px 25px;
+                }
+
+                .cookie-content {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .cookie-text {
+                    min-width: unset;
+                }
+            }
+
+            /* Animation for page load */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .login-container {
+                animation: fadeInUp 0.6s ease-out;
+            }
+
+            /* Glitch effect for SCP theme */
+            .login-title {
+                position: relative;
+            }
+
+            .login-title::after {
+                content: attr(data-text);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #1a1a1a;
+                color: #ff0000;
+                clip: rect(0, 0, 0, 0);
+                animation: glitch 2s infinite;
+            }
+
+            @keyframes glitch {
+                0%,
+                90%,
+                100% {
+                    clip: rect(0, 0, 0, 0);
+                }
+                95% {
+                    clip: rect(0, 350px, 20px, 0);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="login-header">
+                <div class="scp-logo"><i class="fas fa-shield-alt"></i></div>
+                <h1 class="login-title" data-text="SCP Foundation">
+                    SCP Foundation
+                </h1>
+                <p class="login-subtitle">Administration Access Only</p>
+                <div class="classification-badge">CLASSIFIED</div>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        class="form-input"
+                        placeholder="Enter your username"
+                        required
+                    />
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        class="form-input"
+                        placeholder="Enter your password"
+                        required
+                    />
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <i
+                        class="fas fa-sign-in-alt"
+                        style="margin-right: 10px"
+                    ></i>
+                    Authorize Access
+                </button>
+            </form>
+
+            <div class="security-notice">
+                <i
+                    class="fas fa-exclamation-triangle"
+                    style="margin-right: 8px"
+                ></i>
+                <strong>Security Notice:</strong> All access attempts are logged
+                and monitored. Unauthorized access is strictly prohibited.
+            </div>
+        </div>
+
+        <div class="cookie-notice" id="cookieNotice">
+            <div class="cookie-content">
+                <div class="cookie-text">
+                    <strong>Cookie Notice:</strong> By accessing this system, we
+                    store necessary authentication cookies to maintain your
+                    login session. These cookies are essential for the proper
+                    functioning of our security systems and cannot be disabled.
+                </div>
+                <button class="cookie-btn" onclick="knowledgeOfCookies()">
+                    <i class="fas fa-check" style="margin-right: 8px"></i>
+                    Understood
+                </button>
+            </div>
+        </div>
+
+        <script>
+            const connectionIp = "https://localhost:7777/api/";
+
+            function knowledgeOfCookies() {
+                const cookieNotice = document.getElementById("cookieNotice");
+                document.cookie = `cookieNotice=1; path=/; SameSite=None; Secure`;
+                cookieNotice.style.transform = "translateY(100%)";
+                cookieNotice.style.opacity = "0";
+                setTimeout(() => {
+                    cookieNotice.style.display = "none";
+                }, 300);
+            }
+
+            document
+                .getElementById("loginForm")
+                .addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const username = document.getElementById("username").value;
+                    const password = document.getElementById("password").value;
+
+                    if (username && password) {
+                        const btn = document.querySelector(".login-btn");
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML =
+                            '<i class="fas fa-spinner fa-spin" style="margin-right: 10px;"></i>Authenticating...';
+                        btn.disabled = true;
+
+                        fetch(connectionIp + "session", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                Username: username,
+                                Password: password,
+                            }),
+                            credentials: "include",
+                        }).then((response) => {
+                            if (!response.ok) {
+                                setTimeout(() => {
+                                    btn.innerHTML = originalText;
+                                    btn.disabled = false;
+                                }, 2000);
+                                return;
+                            }
+                            response.json().then((data) => {
+                                document.cookie = `sessionId=${data.sessionId}; path=/; SameSite=None; Secure`;
+                                window.location.href = "index.html";
+                            });
+                        });
+                    }
+                });
+
+            document.querySelectorAll(".form-input").forEach((input) => {
+                input.addEventListener("focus", function () {
+                    this.parentElement.style.transform = "scale(1.02)";
+                });
+
+                input.addEventListener("blur", function () {
+                    this.parentElement.style.transform = "scale(1)";
+                });
+            });
+
+            const badge = document.querySelector(".classification-badge");
+            const originalText = badge.textContent;
+            badge.textContent = "";
+
+            document.addEventListener("DOMContentLoaded", (event) => {
+                const cookieNotice = document.getElementById("cookieNotice");
+                const cookie = getCookie("cookieNotice");
+                if (cookie === "") return;
+
+                cookieNotice.style.transform = "translateY(100%)";
+                cookieNotice.style.opacity = "0";
+                setTimeout(() => {
+                    cookieNotice.style.display = "none";
+                }, 300);
+            });
+
+            function getCookie(name) {
+                const cookieName = name + "=";
+                const decodedCookie = decodeURIComponent(document.cookie);
+                const ca = decodedCookie.split(";");
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === " ") {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(cookieName) === 0) {
+                        return c.substring(cookieName.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            setTimeout(() => {
+                let i = 0;
+                const typeWriter = setInterval(() => {
+                    if (i < originalText.length) {
+                        badge.textContent += originalText.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(typeWriter);
+                    }
+                }, 100);
+            }, 1000);
+        </script>
+    </body>
+</html>

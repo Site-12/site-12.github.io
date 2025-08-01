@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Site-12 Development Home</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        />
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <!-- Top Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <!-- Left Side -->
+                <button
+                    class="btn btn-outline-light sidebar-toggle me-3"
+                    id="sidebarToggle"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <button
+                    class="btn btn-outline-danger me-auto"
+                    onclick="logout()"
+                >
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+
+                <!-- Center -->
+                <div class="position-absolute start-50 translate-middle-x">
+                    <span id="departmentHome" class="navbar-brand"
+                        >DEPARTMENT HOME</span
+                    >
+                </div>
+
+                <!-- Right Side -->
+                <div class="align-items-center">
+                    <button
+                        class="btn btn-outline-success badge money-display"
+                        id="usersButton"
+                        hidden="hidden"
+                        onclick="openUserModal()"
+                    >
+                        Users
+                    </button>
+
+                    <span
+                        id="money-display"
+                        class="badge bg-success money-display"
+                        >None Selected..</span
+                    >
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h5><i class="fas fa-building"></i> Departments</h5>
+            </div>
+            <ul class="sidebar-menu" id="departmentsList">
+                <li>
+                    <a
+                        href="#"
+                        class="department-link active"
+                        data-department="security"
+                    >
+                        <i class="fas fa-shield-alt me-2"></i> Error
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div id="noneSelected">
+            <div class="d-flex justify-content-center badge">
+                No department has been selected
+            </div>
+        </div>
+
+        <div class="main-content" hidden="hidden" id="mainContent">
+            <div class="container-fluid">
+                <ul class="nav nav-tabs custom-tabs" id="tab" role="tablist">
+                    <li class="nav-item hidden" role="presentation">
+                        <button
+                            class="nav-link active"
+                            id="overview-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#overview"
+                            type="button"
+                            role="tab"
+                            aria-controls="overview"
+                            aria-selected="true"
+                        >
+                            <i class="fas fa-home"></i> Overview
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link"
+                            id="analytics-tab"
+                            hidden="hidden"
+                            data-bs-toggle="tab"
+                            data-bs-target="#analytics"
+                            type="button"
+                            role="tab"
+                            aria-controls="analytics"
+                            aria-selected="false"
+                        >
+                            <i class="fas fa-chart-bar"></i> Analytics
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link"
+                            id="roles-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#roles"
+                            type="button"
+                            role="tab"
+                            aria-controls="roles"
+                            aria-selected="false"
+                        >
+                            <i class="fas fa-user"></i> Roles
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button
+                            class="nav-link"
+                            id="roster-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#roster"
+                            type="button"
+                            role="tab"
+                            aria-controls="tab5"
+                            aria-selected="false"
+                        >
+                            <i class="fas fa-clipboard-user"></i> Roster
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tabs Content -->
+                <div class="tab-content custom-tab-content" id="tabContent">
+                    <div
+                        class="tab-pane fade show active"
+                        id="overview"
+                        role="tabpanel"
+                        aria-labelledby="overview-tab"
+                    >
+                        <h2 class="mb-4">
+                            <i class="fas fa-tachometer-alt"></i> Department
+                            Overview
+                        </h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card bg-dark border-secondary">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-users"></i> Active
+                                            Personnel
+                                        </h5>
+                                        <p class="card-text">
+                                            Top department staff. (Coming soon)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-dark border-secondary">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-tasks"></i> Most
+                                            Played Role (Coming soon)
+                                        </h5>
+                                        <p class="card-text">
+                                            The most played roles for ease of
+                                            understanding/access of what your
+                                            members want.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="tab-pane fade"
+                        id="analytics"
+                        role="tabpanel"
+                        aria-labelledby="analytics-tab"
+                    >
+                        <h2 class="mb-4">
+                            <i class="fas fa-chart-line"></i> Department
+                            Analytics
+                        </h2>
+                        <p>
+                            Performance metrics and statistical analysis for the
+                            department.
+                        </p>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            Analytics dashboard will be populated with
+                            time-at-refresh data (Unavailable till the
+                            foreseeable future).
+                        </div>
+                    </div>
+                    <div
+                        class="tab-pane fade"
+                        id="roles"
+                        role="tabpanel"
+                        aria-labelledby="roles-tab"
+                    >
+                        <div
+                            class="d-flex justify-content-between align-items-center px-2"
+                            style="margin-top: -20px"
+                        >
+                            <div>
+                                <h4><i class="fas fas fa-user"></i> Roles</h4>
+                            </div>
+
+                            <div
+                                class="flex-grow-1 d-flex justify-content-center"
+                            >
+                                <input
+                                    type="text"
+                                    id="roleSearch"
+                                    class="form-control w-50"
+                                    placeholder="Search..."
+                                    aria-label="Search"
+                                />
+                            </div>
+
+                            <div>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onclick="openNewRoleModal()"
+                                >
+                                    Add a Role
+                                </button>
+                            </div>
+                        </div>
+
+                        <hr
+                            style="
+                                border-top: 8px solid #bbb;
+                                border-radius: 5px;
+                            "
+                        />
+
+                        <!-- Auto-populated content -->
+                        <div id="roleContent">
+                            <i class="fas fa-info-circle"></i> It's quiet here,
+                            you should add something here to get the engine
+                            roaring.
+                        </div>
+                    </div>
+
+                    <div
+                        class="tab-pane fade"
+                        id="roster"
+                        role="tabpanel"
+                        aria-labelledby="roster-tab"
+                    >
+                        <div
+                            class="d-flex justify-content-between align-items-center px-2"
+                            style="margin-top: -20px"
+                        >
+                            <div>
+                                <h4>
+                                    <i class="fas fa-clipboard-user"></i> Roster
+                                </h4>
+                            </div>
+
+                            <div
+                                class="flex-grow-1 d-flex justify-content-center"
+                            >
+                                <input
+                                    type="text"
+                                    id="rosterSearch"
+                                    class="form-control w-50"
+                                    placeholder="Search..."
+                                    aria-label="Search"
+                                />
+                            </div>
+
+                            <div>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onclick="openNewPlayerModal()"
+                                >
+                                    Add to Roster
+                                </button>
+                            </div>
+                        </div>
+
+                        <hr
+                            style="
+                                border-top: 8px solid #bbb;
+                                border-radius: 5px;
+                            "
+                        />
+
+                        <!-- Auto-populated content -->
+                        <div id="rosterContent">
+                            <i class="fas fa-info-circle"></i> It's quiet here,
+                            you should add someone with a friend so they aren't
+                            alone.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audio -->
+        <!--<div style="display: none;">-->
+        <!--    <iframe id="playlist" width="0" height="0" src="https://www.youtube.com/embed/eb2zuegwcwk?enablejsapi=1" title="Star gazing" frameborder="0"></iframe>-->
+        <!--    <script type="text/javascript">-->
+        <!--        const tag = document.createElement('script');-->
+        <!--        tag.src = "https://www.youtube.com/iframe_api";-->
+        <!--        const firstScriptTag = document.getElementsByName('script')[0];-->
+        <!--        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);-->
+
+        <!--        let player;-->
+        <!--        function onYouTubeIframeAPIReady() {-->
+        <!--            player = new YT.Player('playlist', {-->
+        <!--                events: {-->
+        <!--                    'onReady': onPlayerReady-->
+        <!--                }-->
+        <!--            });-->
+        <!--        }-->
+
+        <!--        function onPlayerReady(event) {-->
+        <!--            event.target.setVolume(10); // don't want to deafen anyone..-->
+        <!--            event.target.playVideo();-->
+        <!--        }-->
+        <!--    </script>-->
+        <!--</div>-->
+
+        <!--<script src="https://www.youtube.com/iframe_api"></script>-->
+        <script src="js/bootstrap.bundle.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/sidebar.js"></script>
+
+        <script src="js/managers/rosterManagement.js"></script>
+        <script src="js/managers/roleManagement.js"></script>
+
+        <!-- Modals -->
+        <script src="js/modal.js"></script>
+        <script src="js/modals/playerModal.js"></script>
+        <script src="js/modals/userModal.js"></script>
+        <script src="js/modals/roleModal.js"></script>
+    </body>
+</html>
